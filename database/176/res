@@ -1,0 +1,2 @@
+# 除了HEADER不对应该是对的，MYSQL 使用IFNULL
+select IFNULL((select DISTINCT `Salary` as `SecondHighestSalary` from Employee ORDER BY Salary DESC LIMIT 1, 1), NULL);
