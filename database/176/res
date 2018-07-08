@@ -1,2 +1,4 @@
 # 除了HEADER不对应该是对的，MYSQL 使用IFNULL
-select IFNULL((select DISTINCT `Salary` as `SecondHighestSalary` from Employee ORDER BY Salary DESC LIMIT 1, 1), NULL);
+# select IFNULL((select DISTINCT `Salary` as `SecondHighestSalary` from Employee ORDER BY Salary DESC LIMIT 1, 1), NULL);
+# 下面的是通过的
+select MAX(`Salary`) as `SecondHighestSalary` from Employee WHERE `Salary` NOT IN (select MAX(`Salary`) from Employee)
