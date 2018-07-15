@@ -9,7 +9,8 @@ Usage: python tool.py -p [name] [options]
 
 Options:
     -h, --h         查看帮助
-    -p name         leetcode 题目编号，必须
+    -p name         leetcode 题目编号，（进入创建模式）
+    -t              题目进度统计（进入统计模式）
     -a              题目类型为算法
     -d              题目类型为数据库
     -s              题目类型为Shell
@@ -18,6 +19,7 @@ Options:
 
 Examples:
     python tool.py -p 26 -c
+    python tool.py -t -a
 '''
 
 import sys
@@ -49,12 +51,13 @@ def problem_code_validate(item):
 
 if __name__ == '__main__':
     try:
-        opts, argvs = getopt.getopt(sys.argv[1:], 'p:adsh:cj', ['help'])
+        opts, argvs = getopt.getopt(sys.argv[1:], 'p:tadsh:cj', ['help'])
     except:
         print(__doc__)
         exit()
 
     problem_type = None
+    is_count = False
     problem_code = None
     code_type = None
 
@@ -64,6 +67,8 @@ if __name__ == '__main__':
             exit()
         elif opt == '-p':
             problem_code = problem_code_validate(argv)
+        elif opt == '-t':
+            is_count = True
         elif opt == '-a':
             problem_type = "algorithm"
         elif opt == '-d':
@@ -74,10 +79,26 @@ if __name__ == '__main__':
             code_type = "C++"
         elif opt == '-j':
             problem_type = "Java"
+    if is_count:
+        # 进入 统计 模式
+        print("统计模式")
+        if not problem_type:
+            print("缺少参数")
+            exit()
+        DIR = os.path.join(BASE_DIR, problem_type)
+        total_question = len([name for name in os.listdir(DIR) if os.path.isdir(os.path.join(DIR, name))])
+        print("[{t}] 当前录入题目 {n} 道".format(
+            t=problem_type,
+            n=total_question,
+        ))
+        exit()
+        
 
+    print("创建文件模式")
     if not (problem_type and problem_code):
         print("缺少参数")
         exit()
+    
     problem_path = os.path.join(BASE_DIR, problem_type, problem_code)
     os.mkdir(problem_path)
     create_file(os.path.join(problem_path, "README.md"))
