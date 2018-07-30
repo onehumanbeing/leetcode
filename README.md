@@ -18,6 +18,8 @@ Options:
     
     -j              编程语言为Java
 
+    -t              统计目前录入的题目数量
+
 Examples:
 
 * python tool.py -p 26 -a -c

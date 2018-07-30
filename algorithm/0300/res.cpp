@@ -7,34 +7,20 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         if(n<=1)return n;
-        int dp[n];
+        vector<int> dp(n, 1);
         int buffer;
         int temp;
-        for(int i=0;i<n;i++){
-            // 当前最大的子序列计算
-            temp = 0;
-            for(int j=i;j<n;j++){
-                if(j==i){
-                    temp += 1;
-                    buffer = nums[j];
-                    continue;
-                }
-                if(nums[j]<=buffer)
-                    break;
-                else{
-                    temp += 1;
-                    buffer = nums[j];
-                    continue;
+        int res = 0;
+        // 注意子串和子序列的区别
+        for(int i=1;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(nums[i]>nums[j]){
+                    dp[i] = max(dp[i], dp[j]+1);
                 }
             }
-            if(i==0){
-                dp[i] = temp;
-            }
-            else{
-                dp[i] = max(dp[i-1], temp);
-            }
+            res = max(dp[i], res);
         }
-        return dp[n-1];
+        return res;
     }
 };
 
