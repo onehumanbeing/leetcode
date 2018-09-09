@@ -25,7 +25,7 @@ public:
                 max_num = nums[i];
             }
         }
-        return r-l+1
+        return r-
         
     }
 };

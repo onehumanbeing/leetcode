@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-class Solution {
+dclass Solution {
 public:
     int minSubArrayLen(int s, vector<int>& nums) {
         int n = nums.size();
